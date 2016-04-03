@@ -26,6 +26,7 @@
         </activity>
         <activity android:name=".ActivityAddEvent" />
         <activity android:name=".ActivitySingleEventView"></activity>
+        <activity android:name=".ActivityEventListView" ></activity>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
