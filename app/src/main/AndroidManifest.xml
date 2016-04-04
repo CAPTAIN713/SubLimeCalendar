@@ -3,16 +3,18 @@
     package="com.example.oose.sublimecalendar">
 
     <application
+        android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.orm.SugarApp">
+        android:theme="@style/AppTheme">
 
-        <!-- sugar ORM website: http://satyan.github.io/sugar/index.html-->
-        <!-- Name of the generated sqlite database file.-->
-        <meta-data android:name="DATABASE" android:value="SLC_sugar_database.db" />
+        <!-- sugar ORM website: http://satyan.github.io/sugar/index.html -->
+        <!-- Name of the generated sqlite database file. -->
+        <meta-data
+            android:name="DATABASE"
+            android:value="SLC_sugar_database.db" />
 
         <activity
             android:name=".MainActivity"
@@ -25,7 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ActivityAddEvent" />
-        <activity android:name=".ActivitySingleEventView"></activity>
+        <activity android:name=".ActivitySingleEventView" />
+        <activity android:name=".ActivityEditEvent"></activity>
     </application>
 
 </manifest>

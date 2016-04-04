@@ -126,9 +126,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
+
         if (id == R.id.nav_camera) {
             // Handle the camera action
+
         } else if (id == R.id.nav_gallery) {
+            Fragment weekViewFragment = new FragmentWeekView();
+            if (weekViewFragment != null) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.mainCalendarContainer, weekViewFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -163,6 +173,9 @@ public class MainActivity extends AppCompatActivity
                 this.startActivity(myIntent); //start new activity, old one does not go away
                 break;
         }
+
+
+
     } //end of onClick method
 
 } //end of activity class

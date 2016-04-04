@@ -21,5 +21,14 @@
     <string name="save">Save</string>
     <string name="edit">Edit</string>
     <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="selectTime">Select Time</string>
+    <string name="selectDate">Select Date</string>
+
+    <string-array name="eventTypes">
+        <item>Personal Event</item>
+        <item>Work Event</item>
+        <item>Birthday Event</item>
+    </string-array>
 
 </resources>
