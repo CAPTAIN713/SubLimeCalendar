@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.eric.sublime_calendar.ActivityAddEvent"
+    tools:context="com.example.oose.sublimecalendar.ActivityEditEvent"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,14 +16,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/name"
-            android:id="@+id/addEventTextName"
+            android:id="@+id/editEventTextName"
             android:padding="8dp" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:id="@+id/addEventNameTB"
+            android:id="@+id/editEventNameTB"
             android:layout_weight="1"
             android:maxWidth="20dp"
             android:hint="(Required)" />
@@ -40,11 +40,11 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/date"
-            android:id="@+id/addEventTextDate"
+            android:id="@+id/editEventTextDate"
             android:padding="8dp" />
 
         <TextView
-            android:id="@+id/addEventDateTB"
+            android:id="@+id/editEventDateTB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -66,11 +66,11 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/startTime"
-            android:id="@+id/addEventTextStartTime"
+            android:id="@+id/editEventTextStartTime"
             android:padding="8dp" />
 
         <TextView
-            android:id="@+id/addEventStartTimeTB"
+            android:id="@+id/editEventStartTimeTB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -92,11 +92,11 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/finishTime"
-            android:id="@+id/addEventTextFinishTime"
+            android:id="@+id/editEventTextFinishTime"
             android:padding="8dp" />
 
         <TextView
-            android:id="@+id/addEventFinishTimeTB"
+            android:id="@+id/editEventFinishTimeTB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -119,13 +119,13 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/location"
             android:padding="8dp"
-            android:id="@+id/addEventTextLocation" />
+            android:id="@+id/editEventTextLocation" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:id="@+id/addEventLocationTB"
+            android:id="@+id/editEventLocationTB"
             android:layout_weight="1"
             android:maxWidth="20dp"
             android:hint="(Optional)" />
@@ -142,14 +142,14 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/emailList"
             android:padding="8dp"
-            android:id="@+id/addEventTextEmailList" />
+            android:id="@+id/editEventTextEmailList" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/addEventEmailListTB"
+            android:id="@+id/editEventEmailListTB"
             android:layout_weight="1"
             android:maxWidth="20dp"
             android:hint="(Optional)" />
@@ -167,9 +167,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/eventType"
             android:padding="8dp"
-            android:id="@+id/addEventTextEventType" />
+            android:id="@+id/editEventTextEventType" />
         <Spinner
-            android:id="@+id/addEventTypeSpinner"
+            android:id="@+id/editEventTypeSpinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
@@ -186,13 +186,13 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/note"
             android:padding="8dp"
-            android:id="@+id/addEventTextNote" />
+            android:id="@+id/editEventTextNote" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:id="@+id/addEventNoteTB"
+            android:id="@+id/editEventNoteTB"
             android:layout_weight="1"
             android:maxWidth="20dp"
             android:hint="(Optional)"
@@ -210,7 +210,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save"
-            android:id="@+id/addEventSaveButton"
+            android:id="@+id/editEventSaveButton"
             android:layout_gravity="right"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"

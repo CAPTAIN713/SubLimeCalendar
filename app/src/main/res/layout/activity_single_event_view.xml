@@ -205,15 +205,23 @@
             android:layout_height="wrap_content"
             android:text="@string/share"
             android:id="@+id/singleEventShareButton"
-            android:paddingLeft="60dp"
-            android:paddingRight="60dp" />
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/edit"
             android:id="@+id/singleEventEditButton"
             android:layout_toEndOf="@+id/singleEventShareButton"
-            android:paddingLeft="60dp"
-            android:paddingRight="60dp"/>
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            android:id="@+id/singleEventDeleteButton"
+            android:layout_toEndOf="@+id/singleEventEditButton"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"/>
     </RelativeLayout>
 </LinearLayout>
