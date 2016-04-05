@@ -16,6 +16,7 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -56,6 +57,12 @@ public class FragmentWeekView extends Fragment implements WeekView.EventClickLis
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        return null;
+        /*this could be a problem. you need to return an array of WeekViewEvent, not null.
+        null is bad and causes headaches.
+        * https://github.com/alamkanak/Android-Week-View/blob/master/sample/src/main/java/com/alamkanak/weekview/sample/BasicActivity.java
+        * link to WeekViewEvent class:
+        * https://github.com/alamkanak/Android-Week-View/blob/master/sample/src/main/java/com/alamkanak/weekview/sample/apiclient/Event.java */
+        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+        return events;
     }
 }

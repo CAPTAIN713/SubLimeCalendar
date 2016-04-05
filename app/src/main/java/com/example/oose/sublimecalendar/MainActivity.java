@@ -3,11 +3,9 @@ package com.example.oose.sublimecalendar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,12 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
@@ -50,8 +50,16 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onSelectDate(java.util.Date date, View view) {
                 //Toast.makeText(getApplicationContext(), formatter.format(date), Toast.LENGTH_SHORT).show();
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                String day_string = df.format(date);
+                //System.out.format("==================%s================\n", day_string);
+
                 Fragment dayViewFragment = new FragmentDayView();
-                //Bundle selectDate = new Bundle()
+                Bundle selectDate = new Bundle();
+                selectDate.putString("selectedDate", day_string);
+
+                dayViewFragment.setArguments(selectDate);
+
                 if (dayViewFragment != null) {
                     /** Kristina, this is where you would put the code to go to day view
                      * just change the above new fragment class to your day view java class **/
@@ -126,21 +134,42 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Fragment weekViewFragment = new FragmentWeekView();
-        if (weekViewFragment != null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.mainCalendarContainer, weekViewFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
+
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+
+
         } else if (id == R.id.nav_gallery) {
+            Fragment weekViewFragment = new FragmentWeekView();
+            if (weekViewFragment != null) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.mainCalendarContainer, weekViewFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
 
         } else if (id == R.id.nav_slideshow) {
+            Fragment dayViewFragment = new FragmentDayView();
+
+            java.util.Date today_date = new java.util.Date();
+
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            String day_string = df.format(today_date);
+
+            Bundle dateToday = new Bundle();
+            dateToday.putString("selectedDate", day_string);
+
+            dayViewFragment.setArguments(dateToday);
+            if (dayViewFragment != null) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.mainCalendarContainer, dayViewFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
 
         } else if (id == R.id.nav_manage) {
+            Intent eventListIntent = new Intent(this, ActivityEventListView.class);
+            this.startActivity(eventListIntent); //start new activity, old one does not go away
 
         } else if (id == R.id.nav_share) {
 

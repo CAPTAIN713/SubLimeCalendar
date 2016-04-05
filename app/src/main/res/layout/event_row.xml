@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- This is the layout manager for a row in the RecyclerView -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/event_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="75dp"
+    android:paddingTop="10dp"
+    android:contextClickable="true"
+    android:orientation="horizontal" >
+
+    <!--<com.roomorama.caldroid.CellView />-->
+    <ImageView
+        android:id="@+id/event_color_dot"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/event_list_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/event_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test Text"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="03/02/2016"
+            android:layout_gravity="center_vertical"
+            android:textColor="#000000"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/event_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2:00pm - 3:00pm"
+            android:layout_gravity="center_vertical"
+            android:textColor="#000000"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+</LinearLayout>
