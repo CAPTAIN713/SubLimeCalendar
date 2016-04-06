@@ -133,9 +133,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
-
-        if (id == R.id.nav_camera) {
+        if (id == R.id.month_view) {
             CaldroidFragment caldroidFragment = new CaldroidFragment();
             final CaldroidListener calListener = new CaldroidListener() {
                 @Override
@@ -162,7 +160,7 @@ public class MainActivity extends AppCompatActivity
             transaction.replace(R.id.mainCalendarContainer, caldroidFragment);
             transaction .commit();
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.week_view) {
             Fragment weekViewFragment = new FragmentWeekView();
             if (weekViewFragment != null) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -171,7 +169,7 @@ public class MainActivity extends AppCompatActivity
                 transaction.commit();
             }
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.day_view) {
             Fragment dayViewFragment = new FragmentDayView();
 
             java.util.Date today_date = new java.util.Date();
@@ -190,7 +188,7 @@ public class MainActivity extends AppCompatActivity
                 transaction.commit();
             }
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.Event_list_view) {
             Fragment eventListFragment = new FragmentEventListView();
             if(eventListFragment != null) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
