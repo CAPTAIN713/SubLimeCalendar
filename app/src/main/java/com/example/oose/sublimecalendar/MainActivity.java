@@ -128,10 +128,10 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.month_view) {
             // Handle the camera action
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.week_view) {
             Fragment weekViewFragment = new FragmentWeekView();
             if (weekViewFragment != null) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -140,9 +140,9 @@ public class MainActivity extends AppCompatActivity
                 transaction.commit();
             }
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.day_view) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.Event_list_view) {
 
         } else if (id == R.id.nav_share) {
 
