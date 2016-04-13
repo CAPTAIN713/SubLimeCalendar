@@ -5,8 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.StringTokenizer;
 
 public class ActivitySingleEventView extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,6 +26,7 @@ public class ActivitySingleEventView extends AppCompatActivity implements View.O
     private Bundle extrasBundle;
     private Long selectedEventID;
     private String emList="";
+    private Event e;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class ActivitySingleEventView extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_event_view);
 
-        Event e= Event.findById(Event.class, selectedEventID);
+        e = Event.findById(Event.class, selectedEventID);
         Calendar calendarStartTime = Calendar.getInstance();
         Calendar calendarEndTime = Calendar.getInstance();
         Calendar calendar = Calendar.getInstance();
@@ -137,15 +140,28 @@ public class ActivitySingleEventView extends AppCompatActivity implements View.O
                 break;
 
             case R.id.singleEventShareButton:
-                if(emList.compareTo("")==0){
-                    Toast.makeText(this,"No emails in email list", Toast.LENGTH_SHORT).show();
-                    break;
-                }
                 //example on sending an email: https://github.com/CAPTAIN713/VitaCheck/blob/master/app/src/main/java/vitacheck/vitacheck/fragments/DoctorFragmentIndividualPage.java
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 emailIntent.setData(Uri.parse("mailto:"));
                 emailIntent.setType("text/plain");
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{emList});
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, e.name);
+
+                Date date = new Date(e.date);
+                Time startTime = new Time(e.startTime);
+                Time finishTime = new Time(e.finishTime);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+                // Building email body
+                String emailBody =    "Event Name:  " + e.name + "\n"
+                                    + "Event Type:  " + e.eventType + "\n"
+                                    + "Event Date:  " + dateFormat.format(date) + "\n"
+                                    + "Start Time:  " + timeToString(startTime) + "\n"
+                                    + "Finish Time:  " + timeToString(finishTime) + "\n"
+                                    + "Location:  " + e.location + "\n"
+                                    + "Notes:   " + e.eventNote + "\n";
+
+                emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody);
                 try{
                     startActivity(Intent.createChooser(emailIntent,"Send mail..."));
                 }
@@ -181,4 +197,29 @@ public class ActivitySingleEventView extends AppCompatActivity implements View.O
         }
     } //end of onClick method
 
+    /**
+     * Converts <code>java.sql.Date()</code> to the <code>String</code> with format
+     * <code><i>hh:mm[am|pm]</i></code>.
+     * @param time
+     * @return <code>String</code> of format <code>hh:mm[am|pm]</code>. If <code>time</code>
+     * is <code>null</code>, an empty string is returned.
+     */
+    private String timeToString(Time time) {
+        if(time != null) {
+            StringTokenizer tok = new StringTokenizer(time.toString(), ":");
+
+            int hours = Integer.parseInt(tok.nextToken());
+            String minutes = tok.nextToken();
+
+            if (hours > 11 && hours < 24) {
+                if(hours != 12) hours -= 12;
+                return hours + ":" + minutes + "pm";
+            }
+
+            if(hours == 0) hours = 12;
+            return hours + ":" + minutes + "am";
+        }
+
+        return "\"You Broke It!\" - timeToString ";
+    }
 }
