@@ -1,6 +1,7 @@
 package com.example.oose.sublimecalendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -17,7 +18,7 @@ import android.view.ViewGroup;
  */
 public class FragmentEventListView extends Fragment implements View.OnClickListener {
     private RecyclerView mEventRecycler;
-    private RecyclerView.Adapter mAdapter;
+    private EventRecyclerAdapter mAdapter;
     private DividerItemDecoration mDividerDecoration;
 
     @Override
@@ -32,7 +33,7 @@ public class FragmentEventListView extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_event_list_view, container, false);
 
         mEventRecycler = (RecyclerView) view.findViewById(R.id.eventListRecycler);
-        mAdapter = new EventRecyclerAdapter(getContext());
+        mAdapter = new EventRecyclerAdapter(getContext(), this);
         mEventRecycler.setAdapter(mAdapter);
 
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -45,7 +46,23 @@ public class FragmentEventListView extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        if(view.getId() == R.id.event_row) {
+            /*link on bundles: http://stackoverflow.com/questions/3913592/start-an-activity-with-a-parameter */
+            Intent intent = new Intent(getContext(), ActivitySingleEventView.class);
+            Bundle b = new Bundle();
 
+            EventRecyclerViewHolder holder = (EventRecyclerViewHolder) mEventRecycler.getChildViewHolder(view);
+
+            b.putLong("eventID", holder.getEventID()); //event id
+            intent.putExtras(b); //put id in our next intent
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.updateData();
     }
 
     /**

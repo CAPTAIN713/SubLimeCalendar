@@ -13,10 +13,9 @@ import java.sql.Time;
 public class Event extends SugarRecord {
 
     String name;
-    Date date;
-    Time startTime;
-    Time finishTime;
-    int duration;
+    Long date;
+    Long startTime;
+    Long finishTime;
     String location;
     String emailList;
     String eventType;
@@ -25,7 +24,7 @@ public class Event extends SugarRecord {
     public Event(){
     }
 
-    public Event(String name,Date date,Time startTime, Time finishTime,
+    public Event(String name,Long date,Long startTime, Long finishTime,
                  String location,String emailList,String eventType,String eventNote){
         this.name=name;
         this.date=date;
