@@ -40,11 +40,19 @@ public class FragmentDayView extends Fragment implements WeekView.EventClickList
     private WeekView mWeekView;
     //private WeekView.EventClickListener mEventClickListener;
     private Long cDate;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    /**when the user comes back to the main activity and this fragment from another activity
+     * the code for updating the database is called so that the event data on the view is updated**/
+    public void onStart(){
+        super.onStart();
+        Log.wtf("day view onStart","update event view");
+        mWeekView.notifyDatasetChanged(); //update here
     }
 
     @Override

@@ -43,6 +43,15 @@ public class FragmentWeekView extends Fragment implements WeekView.EventClickLis
     }
 
     @Override
+    /**when the user comes back to the main activity and this fragment from another activity
+     * the code for updating the database is called so that the event data on the view is updated**/
+    public void onStart(){
+        super.onStart();
+        Log.wtf("day view onStart","update event view");
+        mWeekView.notifyDatasetChanged(); //update here
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View weekView = inflater.inflate(R.layout.fragment_week_view, container, false);
