@@ -64,7 +64,7 @@ public class ActivitySingleEventView extends AppCompatActivity implements View.O
 
         calendar.setTime(new java.util.Date(e.date));
         name.setText(e.name);
-        date.setText(calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.YEAR));
+        date.setText((calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.YEAR));
         calendar.setTime(new java.util.Date(e.startTime));
         startTime.setText(calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
         calendar.setTime(new java.util.Date(e.finishTime));
