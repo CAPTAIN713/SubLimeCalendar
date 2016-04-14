@@ -56,7 +56,8 @@ public class ActivityEditEvent extends AppCompatActivity implements View.OnClick
         locationTB=(EditText) findViewById(R.id.editEventLocationTB);
         emailListTB=(EditText) findViewById(R.id.editEventEmailListTB);
         noteTB=(EditText) findViewById(R.id.editEventNoteTB);
-        /*code on date and time picker: http://stackoverflow.com/questions/17901946/timepicker-dialog-from-clicking-edittext */
+        /*code on date and time picker: http://stackoverflow.com/questions/17901946/timepicker-dialog-from-clicking-edittext
+         * use this for later: http://android--examples.blogspot.com/2015/04/timepickerdialog-in-android.html */
         date=(TextView) findViewById(R.id.editEventDateTB);
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +84,7 @@ public class ActivityEditEvent extends AppCompatActivity implements View.OnClick
                         }catch(Exception e){
                             //error_lol
                         }
-                        date.setText("" + selectedday + "/" + selectedmonth + "/" + selectedyear);
+                        date.setText("" + selectedmonth + "/" + selectedday + "/" + selectedyear);
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select Date");
@@ -168,7 +169,8 @@ public class ActivityEditEvent extends AppCompatActivity implements View.OnClick
         saveButton.setOnClickListener(this);
         nameTB.setText(e.name);
         calendar.setTime(new java.util.Date(e.date));
-        date.setText(calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.YEAR));
+        int temp=calendar.get(Calendar.MONTH)+1;
+        date.setText(temp + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.YEAR));
         microSecDate=calendar.getTimeInMillis();
         calendar.setTime(new java.util.Date(e.startTime));
         startTime.setText(calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
