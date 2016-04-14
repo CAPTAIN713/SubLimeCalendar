@@ -178,6 +178,9 @@ public class ActivityEditEvent extends AppCompatActivity implements View.OnClick
         microSecFinishTime=calendar.getTimeInMillis();
         locationTB.setText(e.location);
         emailListTB.setText(e.emailList);
+        int spinnerPosition = adapter.getPosition(e.eventType);
+        spinner.setSelection(spinnerPosition);
+        eventType=e.eventType;
         //eventTypeTB.setText(e.eventType);
         noteTB.setText(e.eventNote);
 
