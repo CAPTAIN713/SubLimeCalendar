@@ -1,5 +1,6 @@
 package com.example.oose.sublimecalendar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -226,8 +227,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-
-
     } //end of onClick method
+
 
 } //end of activity class

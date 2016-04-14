@@ -68,6 +68,7 @@ public class ActivityAddEvent extends AppCompatActivity implements View.OnClickL
                         }catch(Exception e){
                             //error_lol
                         }
+                        int temp=selectedmonth+1;
                         date.setText("" + selectedmonth + "-" + selectedday + "-" + selectedyear);
                     }
                 }, mYear, mMonth, mDay);

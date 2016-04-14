@@ -1,5 +1,6 @@
 package com.example.oose.sublimecalendar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -32,18 +33,26 @@ import java.util.Locale;
 /**
  * Created by kristina on 3/30/2016.
  */
-public class FragmentDayView extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener{
+public class FragmentDayView extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.ScrollListener {
 
 
     // Get a reference for the week view in the layout.
     private WeekView mWeekView;
     //private WeekView.EventClickListener mEventClickListener;
     private Long cDate;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    /**when the user comes back to the main activity and this fragment from another activity
+     * the code for updating the database is called so that the event data on the view is updated**/
+    public void onStart(){
+        super.onStart();
+        Log.wtf("day view onStart","update event view");
+        mWeekView.notifyDatasetChanged(); //update here
     }
 
     @Override
@@ -65,6 +74,7 @@ public class FragmentDayView extends Fragment implements WeekView.EventClickList
 
         mWeekView.setOnEventClickListener(this);
         mWeekView.setMonthChangeListener(this);
+        mWeekView.setScrollListener(this);
 
         mWeekView.goToDate(day);
 
@@ -72,18 +82,42 @@ public class FragmentDayView extends Fragment implements WeekView.EventClickList
     }
 
     @Override
+    /**
+     * used when returning from another event view activity. this will cause the day view to refreash
+     * in case data was changed.
+     * link on using set/return result: http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
+     * link on using set/return result with fragment and activity:
+     *      http://stackoverflow.com/questions/17085729/startactivityforresult-from-a-fragment-and-finishing-child-activity-doesnt-c **/
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        getActivity();
+        //if we get the refreash result code (this is always true, if statement is for error checking)
+        if( (requestCode==1) && (resultCode== Activity.RESULT_OK)){
+            Log.wtf("day view", "On activity result");
+            mWeekView.notifyDatasetChanged(); //update here
+        }
+    }
+
+
+    @Override
+    /**
+     * when you click on an event go to the event view activity. use the startActivityForResult
+     * so that we can refresh the view page with the onActivityResult method. **/
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
         /*link on bundles: http://stackoverflow.com/questions/3913592/start-an-activity-with-a-parameter */
-        Intent intent = new Intent(getContext(),ActivitySingleEventView.class);
+        Intent intent = new Intent(getContext(), ActivitySingleEventView.class);
         Bundle b = new Bundle();
-        b.putLong("eventID",event.getId()); //event id
+        b.putLong("eventID", event.getId()); //event id
         intent.putExtras(b); //put id in our next intent
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     @Override
+    /** when you go to the day view for the first time or when you go to a differnt month this method
+     * is called. it grabs all the vents for the current month**/
     public List<WeekViewEvent> onMonthChange(int i, int i2) {
-        /*i==newYear, i2=newMonth*/
+        Log.wtf("Day View onMonthChange","grabbing events");
+        /*i==newYear (yyyy), i2=newMonth (mm)*/
         List<WeekViewEvent> wEvents = new ArrayList<>(1);
 
         //link on using sugar query: https://github.com/satyan/sugar/issues/376
@@ -91,7 +125,7 @@ public class FragmentDayView extends Fragment implements WeekView.EventClickList
         //Long ll=(cDate+31556926);
         //List<Event> events = Event.find(Event.class,"date >= ? AND date < ?",l+"",ll+"");
         //List<Event> events = Event.find(Event.class,"date = ?",cDate+"");
-        List<Event> events = Event.listAll(Event.class); //grab all events from data base
+        List<Event> events = Event.listAll(Event.class); //grab all events from database
 
         for(Event e : events){ /*for each event*/
             //set up start, end, and date calendar objects
@@ -150,4 +184,9 @@ public class FragmentDayView extends Fragment implements WeekView.EventClickList
     }
 
 
+    @Override
+    public void onFirstVisibleDayChanged(Calendar newFirstVisibleDay, Calendar oldFirstVisibleDay) {
+        //when you scroll to the left or right this method is called. not used because
+        //i used on month change mehtod instead.
+    }
 }
