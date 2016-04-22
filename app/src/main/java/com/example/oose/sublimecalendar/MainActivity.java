@@ -197,6 +197,11 @@ public class MainActivity extends AppCompatActivity
                 transaction.commit();
             }
 
+        } else if(id==R.id.Search_view){
+
+
+            //insert search view stuff here
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
