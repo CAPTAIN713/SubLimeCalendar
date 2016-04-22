@@ -1,8 +1,11 @@
 package com.example.oose.sublimecalendar;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +43,15 @@ public class FragmentWeekView extends Fragment implements WeekView.EventClickLis
     }
 
     @Override
+    /**when the user comes back to the main activity and this fragment from another activity
+     * the code for updating the database is called so that the event data on the view is updated**/
+    public void onStart(){
+        super.onStart();
+        Log.wtf("day view onStart","update event view");
+        mWeekView.notifyDatasetChanged(); //update here
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View weekView = inflater.inflate(R.layout.fragment_week_view, container, false);
@@ -70,9 +82,33 @@ public class FragmentWeekView extends Fragment implements WeekView.EventClickLis
     }
 
     @Override
+    /**
+     * used when returning from another event view activity. this will cause the day view to refreash
+     * in case data was changed.
+     * link on using set/return result: http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
+     * link on using set/return result with fragment and activity:
+     *      http://stackoverflow.com/questions/17085729/startactivityforresult-from-a-fragment-and-finishing-child-activity-doesnt-c **/
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        getActivity();
+        //if we get the refreash result code (this is always true, if statement is for error checking)
+        if( (requestCode==1) && (resultCode== Activity.RESULT_OK)){
+            Log.wtf("day view", "On activity result");
+            mWeekView.notifyDatasetChanged(); //update here
+        }
+    }
+
+    @Override
+    /**
+     * when you click on an event go to the event view activity. use the startActivityForResult
+     * so that we can refresh the view page with the onActivityResult method. **/
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-
-
+        /*link on bundles: http://stackoverflow.com/questions/3913592/start-an-activity-with-a-parameter */
+        Intent intent = new Intent(getContext(), ActivitySingleEventView.class);
+        Bundle b = new Bundle();
+        b.putLong("eventID", event.getId()); //event id
+        intent.putExtras(b); //put id in our next intent
+        startActivityForResult(intent, 1);
     }
 
     @Override
