@@ -18,6 +18,11 @@
             android:id="@+id/Event_list_view"
             android:icon="@drawable/ic_chevron_right_24dp"
             android:title="Event List View" />
+        <item
+            android:id="@+id/Search_view"
+            android:icon="@drawable/ic_find_in_page_24dp"
+            android:title="Search_Events" />
+
     </group>
 
 
