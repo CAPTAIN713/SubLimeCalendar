@@ -2,6 +2,7 @@ package com.example.oose.sublimecalendar;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerView
     private ArrayList<Event> eventList = new ArrayList<>();
     private View.OnClickListener mOnClickListener;
     private int eventRowViewID = R.id.event_row;
+    private Boolean searchFlag=false;
 
     public EventRecyclerAdapter(Context context, View.OnClickListener clickListener) {
         inflater = LayoutInflater.from(context);
@@ -29,6 +31,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerView
 
 //        eventList = (ArrayList<Event>) Event.listAll(Event.class, "date asc");
         updateData();
+
     }
 
     /**
@@ -41,9 +44,11 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerView
      * @param eventList the list of events to be displayed
      */
     public EventRecyclerAdapter(Context context, View.OnClickListener clickListener, ArrayList<Event> eventList) {
-        this(context, clickListener);
-
+        //this(context, clickListener);
+        inflater = LayoutInflater.from(context);
+        mOnClickListener = clickListener;
         this.eventList = eventList;
+        searchFlag=true;
     }
 
     @Override
@@ -72,8 +77,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerView
     }
 
     public void updateData() {
-        eventList = (ArrayList<Event>) Event.listAll(Event.class, "date asc, start_time asc, finish_time asc");
-
+        if(!searchFlag) {
+            eventList = (ArrayList<Event>) Event.listAll(Event.class, "date asc, start_time asc, finish_time asc");
+        }
         notifyDataSetChanged();
     }
 }

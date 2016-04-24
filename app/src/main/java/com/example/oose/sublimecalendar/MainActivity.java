@@ -1,6 +1,9 @@
 package com.example.oose.sublimecalendar;
 
 import android.app.Activity;
+import android.widget.LinearLayout;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +19,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
@@ -198,10 +206,53 @@ public class MainActivity extends AppCompatActivity
             }
 
         } else if(id==R.id.Search_view){
-
-
             //insert search view stuff here
+            //link on creating a alert dialog popup: https://www.youtube.com/watch?v=bSWmajyG4zU
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Search Event");
+            builder.setIcon(R.drawable.ic_find_in_page_24dp);
+            builder.setMessage("Please enter event title key word");
 
+            final EditText keywordInput=new EditText(this);
+            final Spinner searchEventSpinner = new Spinner(this);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.searchEventTypes,android.R.layout.simple_spinner_item);
+            searchEventSpinner.setAdapter(adapter);
+
+            //setting up linear layout link: http://stackoverflow.com/questions/7334292/set-multiple-text-boxes-in-a-dialog-in-android
+            LinearLayout alertBoxLayout=new LinearLayout(this);
+            alertBoxLayout.setOrientation(LinearLayout.VERTICAL);
+            alertBoxLayout.addView(keywordInput);
+            alertBoxLayout.addView(searchEventSpinner);
+            builder.setView(alertBoxLayout);
+
+            builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String keyword = keywordInput.getText().toString();
+                    String selectedEventSearchType=searchEventSpinner.getSelectedItem().toString();
+                    Toast.makeText(getApplicationContext(), keyword+" and "+selectedEventSearchType, Toast.LENGTH_SHORT).show();
+
+                    Fragment eventListFragment = new FragmentEventListView();
+                    if(eventListFragment != null) {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        Bundle bun = new Bundle();
+                        bun.putString("searchKeyword",keyword);
+                        bun.putString("searchEventType",selectedEventSearchType);
+                        eventListFragment.setArguments(bun);
+                        transaction.replace(R.id.mainCalendarContainer, eventListFragment);
+                        transaction.addToBackStack("eventListView");
+                        transaction.commit();
+                    }
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog ad =builder.create();
+            ad.show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

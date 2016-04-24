@@ -12,6 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created by Joseph on 4/4/2016.
@@ -20,9 +23,25 @@ public class FragmentEventListView extends Fragment implements View.OnClickListe
     private RecyclerView mEventRecycler;
     private EventRecyclerAdapter mAdapter;
     private DividerItemDecoration mDividerDecoration;
+    private Bundle extrasBundle;
+    private String searchKeyWord,searchEventType;
+    private Boolean searchFlag=false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        extrasBundle =this.getArguments();
+        if(extrasBundle!=null) {
+            if (!(extrasBundle.isEmpty()) && (extrasBundle.containsKey("searchKeyword")) && (extrasBundle.containsKey("searchEventType"))) {
+                //checks if bundle is empty and if it has the search criteria
+                searchKeyWord = extrasBundle.getString("searchKeyword");
+                searchEventType = extrasBundle.getString("searchEventType");
+                searchFlag = true;
+                //Toast.makeText(getContext(),serachEventType, Toast.LENGTH_SHORT).show();
+            } else {
+                //bundle was empty and user is not searching for an event
+                searchFlag = false;
+            }
+        }
         super.onCreate(savedInstanceState);
     }
 
@@ -33,7 +52,26 @@ public class FragmentEventListView extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_event_list_view, container, false);
 
         mEventRecycler = (RecyclerView) view.findViewById(R.id.eventListRecycler);
-        mAdapter = new EventRecyclerAdapter(getContext(), this);
+        if(!searchFlag){
+            mAdapter = new EventRecyclerAdapter(getContext(), this);
+        }
+        else{
+            if(searchEventType.equals("All Event")){
+                //ArrayList<Event> eventList = (ArrayList<Event>) Event.find(Event.class,"name like ?","%"+searchKeyWord+"%", "date asc, start_time asc, finish_time asc");
+                ArrayList<Event> eventList = (ArrayList<Event>) Event.find(Event.class,"name like ?","%"+searchKeyWord+"%");
+                mAdapter = new EventRecyclerAdapter(getContext(), this, eventList);
+            }
+            else{
+                ArrayList<Event> eventList = (ArrayList<Event>) Event.find(Event.class,"name like ?","%"+searchKeyWord+"%");
+                for(int i=eventList.size()-1;i>=0;i--){
+                    String s=eventList.get(i).eventType;
+                    if(!s.equals(searchEventType)){
+                        eventList.remove(i);
+                    }
+                }
+                mAdapter = new EventRecyclerAdapter(getContext(), this, eventList);
+            }
+        }
         mEventRecycler.setAdapter(mAdapter);
 
         mEventRecycler.setLayoutManager(new LinearLayoutManager(getContext()));

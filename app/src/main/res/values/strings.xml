@@ -24,8 +24,15 @@
     <string name="delete">Delete</string>
     <string name="selectTime">Select Time</string>
     <string name="selectDate">Select Date</string>
+    <string name="search">Search</string>
 
     <string-array name="eventTypes">
+        <item>Personal Event</item>
+        <item>Work Event</item>
+        <item>Birthday Event</item>
+    </string-array>
+    <string-array name="searchEventTypes">
+        <item>All Event</item>
         <item>Personal Event</item>
         <item>Work Event</item>
         <item>Birthday Event</item>

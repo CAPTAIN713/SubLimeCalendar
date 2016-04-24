@@ -75,7 +75,7 @@ public class FragmentDayView extends Fragment implements WeekView.EventClickList
         mWeekView.setOnEventClickListener(this);
         mWeekView.setMonthChangeListener(this);
         mWeekView.setScrollListener(this);
-
+        mWeekView.setXScrollingSpeed((float) 0.75);
         mWeekView.goToDate(day);
 
         return view;
